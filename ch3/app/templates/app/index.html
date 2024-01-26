@@ -1,0 +1,32 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+<body>
+    <h1>heading</h1>
+    <h1 id="data"></h1>
+    
+    <script>
+        var ws = new WebSocket('ws://127.0.0.1:8000/ws/sc/')
+        ws.onopen = function(){
+            console.log('connected.....')
+            ws.send('message is sending')
+        }
+        ws.onmessage = function(event){
+            console.log('message recived.....', event.data)
+            var data = JSON.parse(event.data)
+            document.getElementById('data').innerText = data.d
+        }
+        ws.onerror = function(event){
+            console.log('error.....', event)
+        }
+        ws.onclose = function(event){
+            console.log('onclose.....', event)
+        }
+    </script>
+</body>
+</html>
